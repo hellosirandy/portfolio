@@ -1,26 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  HashRouter as Router,
+} from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
+import SideBar from './components/SideBar';
+import Content from './components/Content';
+import Navbar from './components/Navbar';
 
-function App() {
+const App = () => {
+  const isMobile = useMediaQuery({ query: '(max-width: 500px)' });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      {isMobile ? (
+        <div>
+          <Navbar />
+          <Content />
+        </div>
+      ) : (
+        <div style={{ padding: '4rem' }}>
+          <SideBar />
+          <Content />
+        </div>
+      )}
+
+    </Router>
+
   );
-}
+};
 
 export default App;
