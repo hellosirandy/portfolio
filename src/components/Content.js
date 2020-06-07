@@ -3,9 +3,9 @@ import {
   Route, Switch,
 } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
-import About from '../About';
-import CV from '../CV';
-import Contact from '../../Contact';
+import About from './About';
+import CV from './CV';
+import Contact from './Contact';
 
 const Content = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 500px)' });

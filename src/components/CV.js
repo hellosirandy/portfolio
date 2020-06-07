@@ -1,15 +1,19 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
-import Title from '../Title';
-import Experience from '../Experience';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import Title from './Title';
+import Experience from './Experience';
 
 const workExperiences = [
   {
-    title: 'Software Engineer',
+    title: 'Software Apps Engineer',
     subtitle: 'Yahoo (Sports)',
     time: '03/09/2020 - ',
     location: 'San Francisco, California',
+    bulletins: [
+      'Focusing on Yahoo Sports iOS App (Swift, Objective C)',
+      'Mainting an internal tool described in internship experience below.',
+    ],
   },
   {
     title: 'Software Engineer Intern',
@@ -60,14 +64,18 @@ const educationExperiences = [
   },
 ];
 
-const CV = ({ location: { pathname } }) => {
+const CV = () => {
+  const { pathname } = useLocation();
+  const [title, setTitle] = useState('');
   useEffect(() => {
-    document.title = `${pathname === '/work' ? 'Work' : 'Education'} - Andy Chien`;
-  });
+    setTitle(`${pathname === '/work' ? 'Work' : 'Education'} - Andy Chien`);
+  }, [pathname]);
   const experiences = pathname === '/work' ? workExperiences : educationExperiences;
-  const title = pathname === '/work' ? 'Work' : 'Education';
   return (
-    <div>
+    <>
+      <Helmet>
+        <title>{title}</title>
+      </Helmet>
       <Title>{title}</Title>
       {experiences.map((exp, idx) => (
         <Experience
@@ -80,12 +88,8 @@ const CV = ({ location: { pathname } }) => {
           last={idx === experiences.length - 1}
         />
       ))}
-    </div>
+    </>
   );
 };
 
-CV.propTypes = {
-  location: PropTypes.object.isRequired,
-};
-
-export default withRouter(CV);
+export default CV;

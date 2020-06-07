@@ -1,15 +1,46 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/Image';
-import { withRouter } from 'react-router-dom';
-import styles from './styles';
-import logo from '../../assets/images/blacklogo.png';
+import { useHistory } from 'react-router-dom';
+import logo from '../assets/images/blacklogo.png';
 
-const SideBar = ({ history }) => {
-  const handleItemClicked = (path) => () => {
-    history.push(path);
-  };
+const listItemStyle = {
+  border: 'none',
+  paddingTop: 6,
+  paddingBottom: 8,
+  paddingLeft: 0,
+  paddingRight: '2rem',
+  outline: 0,
+};
+
+const styles = {
+  container: {
+    width: 300,
+    paddingBottom: 60,
+    height: '100%',
+    position: 'fixed',
+  },
+  listItem: listItemStyle,
+  highlitedListItem: {
+    ...listItemStyle,
+    fontWeight: 600,
+  },
+  divider: {
+    ...listItemStyle,
+    padding: 0,
+  },
+  header: {
+    ...listItemStyle,
+    display: 'flex',
+    alignItems: 'center',
+    paddingTop: '0',
+    paddingBottom: '1.5rem',
+  },
+};
+
+const SideBar = () => {
+  const history = useHistory();
+  const handleItemClicked = (path) => () => history.push(path);
   const path = history.location.pathname;
   return (
     <div style={styles.container}>
@@ -28,8 +59,4 @@ const SideBar = ({ history }) => {
   );
 };
 
-SideBar.propTypes = {
-  history: PropTypes.object.isRequired,
-};
-
-export default withRouter(SideBar);
+export default SideBar;
